@@ -17,7 +17,7 @@ const INITIAL_CARS: Car[] = [
     brand: 'Porsche',
     type: 'Sports',
     dailyPrice: 280,
-    image: '/src/assets/images/car_porsche_taycan_1790701595291.jpg',
+    image: '/images/car_porsche_taycan_1790701595291.jpg',
     seatCapacity: 4,
     fuelType: 'Electric',
     transmission: 'Automatic',
@@ -38,7 +38,7 @@ const INITIAL_CARS: Car[] = [
     brand: 'Tesla',
     type: 'Electric',
     dailyPrice: 125,
-    image: '/src/assets/images/car_tesla_model3_1790701583962.jpg',
+    image: '/images/car_tesla_model3_1790701583962.jpg',
     seatCapacity: 5,
     fuelType: 'Electric',
     transmission: 'Automatic',
@@ -59,7 +59,7 @@ const INITIAL_CARS: Car[] = [
     brand: 'Land Rover',
     type: 'SUV',
     dailyPrice: 210,
-    image: '/src/assets/images/car_range_rover_1790701604992.jpg',
+    image: '/images/car_range_rover_1790701604992.jpg',
     seatCapacity: 5,
     fuelType: 'Hybrid',
     transmission: 'Automatic',
@@ -80,7 +80,7 @@ const INITIAL_CARS: Car[] = [
     brand: 'BMW',
     type: 'Sports',
     dailyPrice: 245,
-    image: '/src/assets/images/car_bmw_m4_1790701616183.jpg',
+    image: '/images/car_bmw_m4_1790701616183.jpg',
     seatCapacity: 4,
     fuelType: 'Petrol',
     transmission: 'Automatic',
@@ -205,7 +205,7 @@ const INITIAL_BOOKINGS: Booking[] = [
     _id: '674b99f20b33a123c7890001',
     carId: '674b89f10a12e345b6789001',
     carName: 'Porsche Taycan 4S Electric',
-    carImage: '/src/assets/images/car_porsche_taycan_1790701595291.jpg',
+    carImage: '/images/car_porsche_taycan_1790701595291.jpg',
     carType: 'Sports',
     pickupLocation: 'Downtown Financial Center, Bay St.',
     userId: 'user_alex_morgan',
@@ -293,7 +293,20 @@ class DriveFleetDatabase {
         localStorage.setItem(STORAGE_KEYS.CARS, JSON.stringify(INITIAL_CARS));
         return INITIAL_CARS;
       }
-      return JSON.parse(data);
+      const cars: Car[] = JSON.parse(data);
+      // Migrate any legacy '/src/assets/images/' paths to '/images/'
+      let migrated = false;
+      const updated = cars.map((car) => {
+        if (car.image && car.image.startsWith('/src/assets/images/')) {
+          migrated = true;
+          return { ...car, image: car.image.replace(/^\/src\/assets\/images\//, '/images/') };
+        }
+        return car;
+      });
+      if (migrated) {
+        localStorage.setItem(STORAGE_KEYS.CARS, JSON.stringify(updated));
+      }
+      return updated;
     } catch {
       return INITIAL_CARS;
     }
@@ -335,7 +348,19 @@ class DriveFleetDatabase {
         localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(INITIAL_BOOKINGS));
         return INITIAL_BOOKINGS;
       }
-      return JSON.parse(data);
+      const bookings: Booking[] = JSON.parse(data);
+      let migrated = false;
+      const updated = bookings.map((b) => {
+        if (b.carImage && b.carImage.startsWith('/src/assets/images/')) {
+          migrated = true;
+          return { ...b, carImage: b.carImage.replace(/^\/src\/assets\/images\//, '/images/') };
+        }
+        return b;
+      });
+      if (migrated) {
+        localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(updated));
+      }
+      return updated;
     } catch {
       return INITIAL_BOOKINGS;
     }

@@ -12,19 +12,19 @@ const CAR_TYPES: CarType[] = ['Sedan', 'SUV', 'Luxury', 'Sports', 'Electric', 'H
 const PRESET_IMAGES = [
   {
     name: 'Porsche Taycan',
-    url: '/src/assets/images/car_porsche_taycan_1790701595291.jpg'
+    url: '/images/car_porsche_taycan_1790701595291.jpg'
   },
   {
     name: 'Tesla Model 3',
-    url: '/src/assets/images/car_tesla_model3_1790701583962.jpg'
+    url: '/images/car_tesla_model3_1790701583962.jpg'
   },
   {
     name: 'Range Rover Velar',
-    url: '/src/assets/images/car_range_rover_1790701604992.jpg'
+    url: '/images/car_range_rover_1790701604992.jpg'
   },
   {
     name: 'BMW M4 Competition',
-    url: '/src/assets/images/car_bmw_m4_1790701616183.jpg'
+    url: '/images/car_bmw_m4_1790701616183.jpg'
   },
   {
     name: 'Mercedes-Benz Luxury',

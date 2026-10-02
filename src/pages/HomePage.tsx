@@ -4,6 +4,7 @@ import { db } from '../services/db';
 import { CarCard } from '../components/cars/CarCard';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { useNavigation } from '../context/NavigationContext';
+import heroCarFleetImage from '../assets/images/hero_car_fleet_1790701572067.jpg';
 import {
   KeyRound,
   Shield,
@@ -116,10 +117,13 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-6">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/80 dark:border-slate-800/80 group">
                 <img
-                  src="/src/assets/images/hero_car_fleet_1790701572067.jpg"
+                  src={heroCarFleetImage}
                   alt="DriveFleet modern luxury vehicles lineup"
                   className="w-full aspect-[16/10] object-cover group-hover:scale-105 transition-transform duration-700"
                   referrerPolicy="no-referrer"
+                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                    e.currentTarget.src = '/images/hero_car_fleet_1790701572067.jpg';
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
                 
